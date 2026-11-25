@@ -1,0 +1,26 @@
+{
+  "name": "@senzu/sdk-core",
+  "version": "0.1.0",
+  "description": "Senzu's contract math (the Rust core) as WebAssembly: health checks, lens searches, liquidation and market math, bit-exact with the contracts.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./pkg/senzu_sdk_core.js",
+  "types": "./pkg/senzu_sdk_core.d.ts",
+  "exports": {
+    ".": {
+      "types": "./pkg/senzu_sdk_core.d.ts",
+      "default": "./pkg/senzu_sdk_core.js"
+    }
+  },
+  "files": [
+    "pkg",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "RUSTFLAGS=\"--remap-path-prefix=$HOME=~\" wasm-pack build ../../rust-sdk/core --target web --release --out-dir ../../ts-sdk/core/pkg --out-name senzu_sdk_core --no-pack -- --features wasm && rm -f pkg/.gitignore"
+  },
+  "devDependencies": {
+    "wasm-pack": "^0.15.0"
+  }
+}

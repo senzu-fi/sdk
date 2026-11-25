@@ -1,0 +1,41 @@
+[package]
+name = "senzu-sdk-core"
+description = "Senzu's contract math in Rust: health checks, share and interest math, liquidations, lens searches. Bit-exact with the Solidity code."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+readme = "README.md"
+keywords = ["defi", "uniswap", "lending", "ethereum", "wasm"]
+categories = ["cryptography::cryptocurrencies", "mathematics"]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+bench = false
+
+[features]
+default = []
+## Serialize and Deserialize for the public types (numbers as 0x-prefixed hex strings)
+serde = ["dep:serde", "alloy-primitives/serde"]
+## wasm-bindgen exports and TypeScript types, built by wasm-pack into the TypeScript core package
+wasm = ["serde", "dep:tsify", "dep:wasm-bindgen", "dep:serde-wasm-bindgen"]
+
+[dependencies]
+alloy-primitives.workspace = true
+thiserror.workspace = true
+serde = { workspace = true, optional = true }
+tsify = { workspace = true, optional = true }
+wasm-bindgen = { workspace = true, optional = true }
+serde-wasm-bindgen = { workspace = true, optional = true }
+
+[dev-dependencies]
+proptest.workspace = true
+criterion.workspace = true
+
+[[bench]]
+name = "core"
+harness = false
+
+[lints]
+workspace = true

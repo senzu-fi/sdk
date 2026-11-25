@@ -1,0 +1,53 @@
+[workspace]
+resolver = "3"
+members = ["rust-sdk/core"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+license = "MIT"
+authors = ["Senzu"]
+
+[workspace.dependencies]
+alloy-primitives = { version = "1.4", default-features = false }
+thiserror = { version = "2", default-features = false }
+serde = { version = "1", default-features = false, features = ["derive"] }
+tsify = { version = "0.5", default-features = false, features = ["js"] }
+wasm-bindgen = "0.2"
+serde-wasm-bindgen = "0.6"
+proptest = "1"
+criterion = "0.5"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+unreachable_pub = "warn"
+unused_qualifications = "warn"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+# Every Solidity operation that can revert must be an explicit checked operation here, so the SDK fails exactly
+# where the contracts do instead of wrapping or panicking
+arithmetic_side_effects = "deny"
+cast_possible_truncation = "deny"
+cast_possible_wrap = "deny"
+cast_sign_loss = "deny"
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+indexing_slicing = "deny"
+unreachable = "deny"
+todo = "deny"
+unimplemented = "deny"
+dbg_macro = "deny"
+print_stdout = "deny"
+module_name_repetitions = "allow"
+# Uniswap names range ends a and b (sqrt_price_a_x96 / sqrt_price_b_x96); the contracts use the same names
+similar_names = "allow"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
